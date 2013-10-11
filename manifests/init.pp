@@ -22,11 +22,8 @@ class collectd ( $graphitehost, $management_interface ) {
     ensure => installed,
   }
 
-  # A 'feature' of the pip installer is it doesn't notice the space.
-  package { 'collectd ':
-    alias    => 'pip-collectd',
-    notify   => Service['collectd'],
-    provider => 'pip',
+  package { 'python-collectd':
+    ensure => installed,
   }
 
   file { '/etc/collectd/collectd.conf':
@@ -50,7 +47,7 @@ class collectd ( $graphitehost, $management_interface ) {
     group   => 'root',
     mode    => '0600',
     source  => 'puppet:///modules/collectd/carbon_writer.py',
-    require => [Package['collectd'],Package['pip-collectd']],
+    require => [Package['collectd'],Package['python-collectd']],
   }
 
   file { '/etc/collectd/carbon-writer.conf':

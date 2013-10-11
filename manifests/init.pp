@@ -22,7 +22,7 @@ class collectd ( $graphitehost, $management_interface ) {
     ensure => installed,
   }
 
-  package { 'python-collectd':
+  package { 'collectd-core':
     ensure => installed,
   }
 
@@ -47,7 +47,7 @@ class collectd ( $graphitehost, $management_interface ) {
     group   => 'root',
     mode    => '0600',
     source  => 'puppet:///modules/collectd/carbon_writer.py',
-    require => [Package['collectd'],Package['python-collectd']],
+    require => [Package['collectd'],Package['collectd-core']],
   }
 
   file { '/etc/collectd/carbon-writer.conf':
